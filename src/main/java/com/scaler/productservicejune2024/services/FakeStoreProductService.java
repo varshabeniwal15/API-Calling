@@ -7,6 +7,7 @@ import com.scaler.productservicejune2024.models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service  //used this annotation to create object by springboot
@@ -36,8 +37,18 @@ public class FakeStoreProductService implements  ProductService{
 
     @Override
     public List<Product> getAllProducts() {
+   FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject(
+           "https://fakestoreapi.com/products" ,
+           FakeStoreProductDto[] .class
 
-        return null;
+   );
+
+   //Convert list of all fakestoreproductdto into list of product
+        List<Product> products = new ArrayList<>();
+        for(FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos){
+            products.add(convertfakestoretoproduct(fakeStoreProductDto));
+        }
+        return products;
     }
 
     private Product convertfakestoretoproduct(FakeStoreProductDto fakeStoreProductDto){

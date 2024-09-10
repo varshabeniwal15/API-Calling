@@ -31,8 +31,9 @@ public class ProductController {
         //http://localhost//:8080//products/id
         return productService.getSingleProduct(id);
     }
+    @GetMapping()
     public List<Product> getAllProducts(){
-        return new ArrayList<>();
+        return productService.getAllProducts();
     }
 
 
