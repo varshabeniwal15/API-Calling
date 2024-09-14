@@ -2,6 +2,7 @@ package com.scaler.productservicejune2024.services;
 
 
 import com.scaler.productservicejune2024.dtos.FakeStoreProductDto;
+import com.scaler.productservicejune2024.exception.ProductNotFoundException;
 import com.scaler.productservicejune2024.models.Category;
 import com.scaler.productservicejune2024.models.Product;
 import org.springframework.http.HttpMethod;
@@ -24,14 +25,19 @@ public class FakeStoreProductService implements  ProductService{
     }
 
     @Override
-    public Product getSingleProduct(Long ProductId) {
+    public Product getSingleProduct(Long ProductId) throws ProductNotFoundException {
         //Call Fakestore  Service to fetch the product with given id (using)=> HTTP CALL
         FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/1" + ProductId,
                 FakeStoreProductDto.class
         );
+
+        if(fakeStoreProductDto== null){
+            throw new ProductNotFoundException("Product with id" + ProductId + "doesn't exist");
+        }
         return convertfakestoretoproduct(fakeStoreProductDto);
 
+//        throw new ArithmeticException();
     }
 
 

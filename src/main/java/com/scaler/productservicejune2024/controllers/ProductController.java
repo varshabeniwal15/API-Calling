@@ -1,8 +1,12 @@
 package com.scaler.productservicejune2024.controllers;
 
+import com.scaler.productservicejune2024.exception.ProductNotFoundException;
 import com.scaler.productservicejune2024.models.Product;
 import com.scaler.productservicejune2024.services.FakeStoreProductService;
 import com.scaler.productservicejune2024.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,10 +27,16 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable("id") Long id){
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
+
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(
+                productService.getSingleProduct(id),
+                HttpStatus.OK
+        );
 
         //http://localhost//:8080//products/id
-        return productService.getSingleProduct(id);
+//        return productService.getSingleProduct(id);
+        return responseEntity;
     }
 
     @GetMapping()
@@ -52,5 +62,16 @@ public class ProductController {
      return  null;
     }
 
+
+
+
+//      @ExceptionHandler(ArithmeticException.class)
+//     public ResponseEntity<String> handleArithmeticException(){
+//              ResponseEntity<String> response = new ResponseEntity<>(
+//                      "Something went wrong, Coming from controller",
+//                      HttpStatus.NOT_FOUND
+//              );
+//      return  response;
+//          }
 
 }
