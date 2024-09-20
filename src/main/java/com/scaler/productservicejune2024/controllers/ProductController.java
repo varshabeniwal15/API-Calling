@@ -4,6 +4,8 @@ import com.scaler.productservicejune2024.exception.ProductNotFoundException;
 import com.scaler.productservicejune2024.models.Product;
 import com.scaler.productservicejune2024.services.FakeStoreProductService;
 import com.scaler.productservicejune2024.services.ProductService;
+import com.scaler.productservicejune2024.services.SelfProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class ProductController {
     private ProductService productService;
 
 
-    public ProductController(ProductService productService)
+    public ProductController(@Qualifier("selfProductService") ProductService productService)
     {
            this.productService = productService;
 
@@ -46,7 +48,9 @@ public class ProductController {
 
     // Delete API
 
-    public void deleteProduct(Long id){
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable("id") Long productId){
+        productService.deleteProduct(productId);
 
     }
 
@@ -73,5 +77,11 @@ public class ProductController {
 //              );
 //      return  response;
 //          }
+
+    @PostMapping
+    public Product addnewproduct(@RequestBody Product product){
+
+        return productService.addnewproduct( product);
+    }
 
 }

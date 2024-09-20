@@ -1,6 +1,8 @@
 package com.scaler.productservicejune2024.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +14,7 @@ public class Product extends  BaseModels{
     private  String Title;
     private double price;
     @ManyToOne
+//    @JoinColumn
     private  Category category;
 
     /* 1               1

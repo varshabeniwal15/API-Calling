@@ -5,6 +5,7 @@ import com.scaler.productservicejune2024.dtos.FakeStoreProductDto;
 import com.scaler.productservicejune2024.exception.ProductNotFoundException;
 import com.scaler.productservicejune2024.models.Category;
 import com.scaler.productservicejune2024.models.Product;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -14,8 +15,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service  //used this annotation to create object by springboot
-
+@Service("fakeStoreProductservice")  //used this annotation to create object by springboot
+//@Primary
 public class FakeStoreProductService implements  ProductService{
 
     private RestTemplate restTemplate;
@@ -78,6 +79,11 @@ public class FakeStoreProductService implements  ProductService{
 
     @Override
     public Product replaceProduct(Long id, Product product) {
+        return null;
+    }
+
+    @Override
+    public Product addnewproduct(Product product) {
         return null;
     }
 
