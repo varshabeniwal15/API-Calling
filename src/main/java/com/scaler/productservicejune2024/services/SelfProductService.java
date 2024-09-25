@@ -5,10 +5,15 @@ import com.scaler.productservicejune2024.models.Category;
 import com.scaler.productservicejune2024.models.Product;
 import com.scaler.productservicejune2024.repositories.CategoryRepository;
 import com.scaler.productservicejune2024.repositories.ProductRepository;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceContextType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+@PersistenceContext(type = PersistenceContextType.EXTENDED)
+
 
 @Service
 public class SelfProductService implements ProductService{
@@ -43,14 +48,32 @@ public class SelfProductService implements ProductService{
 
     @Override
     public void deleteProduct(Long id) {
-       productRepository.deleteById(id);
-    }
 
+        productRepository.deleteById(id);
+    }
+// Patch
     @Override
-    public Product updateProduct(Long id, Product product) {
-        return null;
+    public Product updateProduct(Long id, Product product) throws ProductNotFoundException {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+
+        if(optionalProduct.isEmpty()){
+            throw new ProductNotFoundException("Product with id " + "id" + " doesn't exist");
+        }
+        Product prodcutInDB = optionalProduct.get();
+
+        if(product.getTitle()!=null){
+            prodcutInDB.setTitle(product.getTitle());
+        }
+
+        if(product.getPrice() !=null){
+            prodcutInDB.setPrice(product.getPrice());
+        }
+
+
+        return productRepository.save(prodcutInDB);
     }
 
+    //Put
     @Override
     public Product replaceProduct(Long id, Product product) {
         return null;

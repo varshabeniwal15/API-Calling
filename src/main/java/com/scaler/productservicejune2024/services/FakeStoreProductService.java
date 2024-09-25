@@ -5,6 +5,8 @@ import com.scaler.productservicejune2024.dtos.FakeStoreProductDto;
 import com.scaler.productservicejune2024.exception.ProductNotFoundException;
 import com.scaler.productservicejune2024.models.Category;
 import com.scaler.productservicejune2024.models.Product;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceContextType;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+@PersistenceContext(type = PersistenceContextType.EXTENDED)
 @Service("fakeStoreProductservice")  //used this annotation to create object by springboot
 //@Primary
 public class FakeStoreProductService implements  ProductService{

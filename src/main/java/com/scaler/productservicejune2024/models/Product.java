@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Product extends  BaseModels{
-    private  String Title;
-    private double price;
+    private  String title;
+    private Double price;
     @ManyToOne
 //    @JoinColumn
     private  Category category;

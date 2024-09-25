@@ -57,7 +57,7 @@ public class ProductController {
     // Patch API :- Use to update some parameter of Product
    //PATCH - http://localhost:8080/products/1
    @PatchMapping("{id}")
-    public  Product updateProduct(@PathVariable("id") Long id ,@RequestBody Product product){
+    public  Product updateProduct(@PathVariable("id") Long id ,@RequestBody Product product) throws ProductNotFoundException {
         return  productService.updateProduct(id , product);
     }
    //Replace product means replace whole parameter of product

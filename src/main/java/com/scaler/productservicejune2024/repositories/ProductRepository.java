@@ -2,9 +2,11 @@ package com.scaler.productservicejune2024.repositories;
 
 import com.scaler.productservicejune2024.models.Category;
 import com.scaler.productservicejune2024.models.Product;
+import com.scaler.productservicejune2024.projections.ProductwithTitleAndId;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public interface ProductRepository extends JpaRepository<Product , Long> {
     List<Product> findByPriceIsGreaterThan(Double Price);
     //Select * from product where price > 500
 
-//    List<Product> findProductByTitleLike(String Title);//case sensitive
+//    List<Product> findProductByTitleLike(String word);//case sensitive
     //Select * from Product where Title like '%iphone%'
     //
 //    List<Product> findProductByTitleLikeIgnoreCase(String word); // Insensitive case
@@ -39,7 +41,11 @@ public interface ProductRepository extends JpaRepository<Product , Long> {
     Optional<Product> findById(Long id);
 
     List<Product> findAll(Sort sort);
+    Product findByTitleContainingIgnoreCase(String word);
 
+    //HQL
+    @Query("Select p.id as id, p.title,p.price as title from Product p ")
+        List<ProductwithTitleAndId> randomSearchMethod();
 
     /*
     1. Repositories should be an interface
